@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@composedb/client': ^0.1.0
   '@composedb/devtools': ^0.1.0
   '@types/node': 18.6.1
   '@types/react': 18.0.15
@@ -14,6 +15,7 @@ specifiers:
   typescript: 4.7.4
 
 dependencies:
+  '@composedb/client': 0.1.0
   '@composedb/devtools': 0.1.0
   chart.js: 3.8.2
   next: 12.2.3_biqbaboplfbrettd7655fr4n2y
@@ -67,6 +69,35 @@ packages:
       - encoding
     dev: false
 
+  /@ceramicnetwork/http-client/2.3.0:
+    resolution: {integrity: sha512-nc+m0m/aPRGEA3CesN0yV4zoQrHtxhXDw9S76PxC2k6yF3fiu6PWlhb0911CwOM5/kYLzUGwT15XQxx7+weTpw==}
+    dependencies:
+      '@ceramicnetwork/common': 2.3.0
+      '@ceramicnetwork/stream-caip10-link': 2.1.0
+      '@ceramicnetwork/stream-model': 0.3.0
+      '@ceramicnetwork/stream-model-instance': 0.3.0
+      '@ceramicnetwork/stream-tile': 2.3.0
+      '@ceramicnetwork/streamid': 2.2.0
+      query-string: 7.1.1
+      rxjs: 7.5.6
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - encoding
+    dev: false
+
+  /@ceramicnetwork/stream-caip10-link/2.1.0:
+    resolution: {integrity: sha512-lAmgmDwsbshg2KDXyg3YJst+yZleFXAmkhUyOKHVn5tGQqn+cy/4lQfIhIETRHIpHUpwCVEN/+RgVLMZtFUUxQ==}
+    dependencies:
+      '@ceramicnetwork/common': 2.3.0
+      '@ceramicnetwork/streamid': 2.2.0
+      caip: 1.1.0
+      did-resolver: 3.2.2
+      lodash.clonedeep: 4.5.0
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - encoding
+    dev: false
+
   /@ceramicnetwork/stream-model-instance/0.3.0:
     resolution: {integrity: sha512-9Wq+RJgh57l7TlQq3va8QVha0hVgBM9ppMbNlackA8M7EvK/jQUl6I+p+L3Vm479TIxLqrUSqIUbQ6vdlmCIYA==}
     dependencies:
@@ -97,6 +128,21 @@ packages:
       - encoding
     dev: false
 
+  /@ceramicnetwork/stream-tile/2.3.0:
+    resolution: {integrity: sha512-rRUUrrH9tOIT7wHpOGHE1+ftDUQFkk1iZr6w/54BkNhbAOYWldIZqX2JYRhI7QmTe+vKzdh6fDI6pHbaTJBfyg==}
+    dependencies:
+      '@ceramicnetwork/common': 2.3.0
+      '@ceramicnetwork/streamid': 2.2.0
+      '@ipld/dag-cbor': 7.0.2
+      '@stablelib/random': 1.0.1
+      fast-json-patch: 3.1.1
+      lodash.clonedeep: 4.5.0
+      uint8arrays: 3.0.0
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - encoding
+    dev: false
+
   /@ceramicnetwork/streamid/2.2.0:
     resolution: {integrity: sha512-39jTsPwM2Y0flYBptTJmSR9YbIbZ/y9kmzVOVm1hyh3j3liDqHLnj8g+kn4PY4ye1pV6cvXT52SVwc99/R5fNg==}
     dependencies:
@@ -105,6 +151,22 @@ packages:
       typescript-memoize: 1.1.0
       uint8arrays: 3.0.0
       varint: 6.0.0
+    dev: false
+
+  /@composedb/client/0.1.0:
+    resolution: {integrity: sha512-wWcjZJ1cOGSCMOSvK2/wcwv025k8+icDHKDKLSUw2U/K2pzhksKm65ZMUAvFKbeluJNFa310ZLb3XAxtXhfW2Q==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@ceramicnetwork/http-client': 2.3.0
+      '@ceramicnetwork/stream-model-instance': 0.3.0
+      '@ceramicnetwork/streamid': 2.2.0
+      '@composedb/graphql-scalars': 0.1.0
+      dataloader: 2.1.0
+      graphql: 16.5.0
+      graphql-relay: 0.10.0_graphql@16.5.0
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - encoding
     dev: false
 
   /@composedb/devtools/0.1.0:
@@ -1180,6 +1242,10 @@ packages:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
     dev: true
 
+  /dataloader/2.1.0:
+    resolution: {integrity: sha512-qTcEYLen3r7ojZNgVUaRggOI+KM7jrKxXeSHhogh/TWxYMeONEMqY+hmkobiYQozsGIyg9OYVzO4ZIfoB4I0pQ==}
+    dev: false
+
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     peerDependencies:
@@ -1213,6 +1279,11 @@ packages:
     dependencies:
       ms: 2.1.2
     dev: true
+
+  /decode-uri-component/0.2.0:
+    resolution: {integrity: sha512-hjf+xovcEn31w/EUYdTXQh/8smFL/dzYjohQGEIgjyNavaJfBY2p5F527Bo1VPATxv0VYTUC2bOcXvqFwk78Og==}
+    engines: {node: '>=0.10'}
+    dev: false
 
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
@@ -1669,6 +1740,11 @@ packages:
       to-regex-range: 5.0.1
     dev: true
 
+  /filter-obj/1.1.0:
+    resolution: {integrity: sha512-8rXg1ZnX7xzy2NGDVkBVaAy+lSlPNwad13BtgSlLuxfIslyt5Vg64U7tFcCt4WS1R0hvtnQybT/IyCkGZ3DpXQ==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /find-up/2.1.0:
     resolution: {integrity: sha512-NWzkk0jSJtTt08+FBFMvXoeZnOJD+jTtsRmBYbAIzJdX6l7dLgR7CTubCM5/eDdPUBvLCeVasP1brfVR/9/EZQ==}
     engines: {node: '>=4'}
@@ -1789,6 +1865,15 @@ packages:
       merge2: 1.4.1
       slash: 3.0.0
     dev: true
+
+  /graphql-relay/0.10.0_graphql@16.5.0:
+    resolution: {integrity: sha512-44yBuw2/DLNEiMypbNZBt1yMDbBmyVPVesPywnteGGALiBmdyy1JP8jSg8ClLePg8ZZxk0O4BLhd1a6U/1jDOQ==}
+    engines: {node: ^12.20.0 || ^14.15.0 || >= 15.9.0}
+    peerDependencies:
+      graphql: ^16.2.0
+    dependencies:
+      graphql: 16.5.0
+    dev: false
 
   /graphql-scalars/1.17.0_graphql@16.5.0:
     resolution: {integrity: sha512-y1WtSu6jiW5QdDjK3RWMRTdK+xAAtSIq3IxmtnhxzH7bCkHV/z8VZa8fsSG4BcWbjQQtCQYQvMnvbQ+TBCyJRQ==}
@@ -2438,6 +2523,16 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /query-string/7.1.1:
+    resolution: {integrity: sha512-MplouLRDHBZSG9z7fpuAAcI7aAYjDLhtsiVZsevsfaHWDS2IDdORKbSd1kWUA+V4zyva/HZoSfpwnYMMQDhb0w==}
+    engines: {node: '>=6'}
+    dependencies:
+      decode-uri-component: 0.2.0
+      filter-obj: 1.1.0
+      split-on-first: 1.1.0
+      strict-uri-encode: 2.0.0
+    dev: false
+
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
@@ -2603,10 +2698,20 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /split-on-first/1.1.0:
+    resolution: {integrity: sha512-43ZssAJaMusuKWL8sKUBQXHWOpq8d6CfN/u1p4gUzfJkM05C8rxTmYrkIPTXapZpORA6LkkzcUulJ8FqA7Uudw==}
+    engines: {node: '>=6'}
+    dev: false
+
   /split/0.2.10:
     resolution: {integrity: sha512-e0pKq+UUH2Xq/sXbYpZBZc3BawsfDZ7dgv+JtRTUPNcvF5CMR4Y9cvJqkMY0MoxWzTHvZuz1beg6pNEKlszPiQ==}
     dependencies:
       through: 2.3.8
+    dev: false
+
+  /strict-uri-encode/2.0.0:
+    resolution: {integrity: sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ==}
+    engines: {node: '>=4'}
     dev: false
 
   /string.prototype.matchall/4.0.7:
