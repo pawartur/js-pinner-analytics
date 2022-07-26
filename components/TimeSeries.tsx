@@ -1,7 +1,6 @@
 import
   React,
 {
-  useContext,
   useEffect,
   useState
 } from "react";
@@ -14,8 +13,16 @@ import { gql } from '@apollo/client'
 
 type DataModel = Record<string, any>
 
+type IntergrationMessageInfo = {
+  id: string,
+  date: string,
+  from: string,
+  type: string,
+  message: string
+}
+
 const TimeSeries = () => {
-  const [data, setData] = useState<DataModel>()
+  const [data, setData] = useState<Array<IntergrationMessageInfo>>()
 
   const updateModel = async () => {
     // Authenticate with hard-coded private key
@@ -44,7 +51,12 @@ const TimeSeries = () => {
     const data = await client.query({
       query: gql(query)
     })
-    setData(data)
+
+    const intergrationMessageInfos = data?.data.integrationMessageIndex.edges.map((edge: Record<string, any>) => {
+      return edge.node as IntergrationMessageInfo
+    })
+
+    setData(intergrationMessageInfos)
   }
 
   useEffect(() => {
