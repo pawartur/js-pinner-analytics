@@ -1,0 +1,243 @@
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  integrationEventMetadataIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): IntegrationEventMetadataConnection
+  taskEventIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): TaskEventConnection
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type CeramicAccount implements Node {
+  id: ID!
+  isViewer: Boolean!
+  integrationEventMetadataList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): IntegrationEventMetadataConnection
+  taskEventList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): TaskEventConnection
+}
+
+"""A connection to a list of items."""
+type IntegrationEventMetadataConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [IntegrationEventMetadataEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type IntegrationEventMetadataEdge {
+  """The item at the end of the edge"""
+  node: IntegrationEventMetadata
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type IntegrationEventMetadata implements Node {
+  id: ID!
+  date: Int
+  from: String!
+  type: String!
+}
+
+"""A connection to a list of items."""
+type TaskEventConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TaskEventEdge]
+}
+
+"""An edge in a connection."""
+type TaskEventEdge {
+  """The item at the end of the edge"""
+  node: TaskEvent
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type TaskEvent implements Node {
+  id: ID!
+  content: String!
+  assignee: String!
+  completed: Boolean
+}
+
+type Mutation {
+  createIntegrationEventMetadata(input: CreateIntegrationEventMetadataInput!): CreateIntegrationEventMetadataPayload
+  updateIntegrationEventMetadata(input: UpdateIntegrationEventMetadataInput!): UpdateIntegrationEventMetadataPayload
+  createTaskEvent(input: CreateTaskEventInput!): CreateTaskEventPayload
+  updateTaskEvent(input: UpdateTaskEventInput!): UpdateTaskEventPayload
+}
+
+type CreateIntegrationEventMetadataPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: IntegrationEventMetadata!
+  clientMutationId: String
+}
+
+input CreateIntegrationEventMetadataInput {
+  content: RequiredIntegrationEventMetadataInput!
+  clientMutationId: String
+}
+
+input RequiredIntegrationEventMetadataInput {
+  date: Int
+  from: String!
+  type: String!
+}
+
+type UpdateIntegrationEventMetadataPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: IntegrationEventMetadata!
+  clientMutationId: String
+}
+
+input UpdateIntegrationEventMetadataInput {
+  id: ID!
+  content: IntegrationEventMetadataInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input IntegrationEventMetadataInput {
+  date: Int
+  from: String
+  type: String
+}
+
+input UpdateOptionsInput {
+  replace: Boolean
+  version: CeramicCommitID
+}
+
+"""A Ceramic Commit ID"""
+scalar CeramicCommitID
+
+type CreateTaskEventPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: TaskEvent!
+  clientMutationId: String
+}
+
+input CreateTaskEventInput {
+  content: RequiredTaskEventInput!
+  clientMutationId: String
+}
+
+input RequiredTaskEventInput {
+  content: String!
+  assignee: String!
+  completed: Boolean
+}
+
+type UpdateTaskEventPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: TaskEvent!
+  clientMutationId: String
+}
+
+input UpdateTaskEventInput {
+  id: ID!
+  content: TaskEventInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input TaskEventInput {
+  content: String
+  assignee: String
+  completed: Boolean
+}
