@@ -2,7 +2,7 @@ import { ApolloClient, ApolloLink, InMemoryCache, Observable } from '@apollo/cli
 import { relayStylePagination } from '@apollo/client/utilities'
 import { ComposeClient } from '@composedb/client'
 
-import { definition } from '../data/runtime.composite'
+import { definition } from '../data/runtime.merged.composite'
 
 export const compose = new ComposeClient({ ceramic: 'http://localhost:7007', definition })
 

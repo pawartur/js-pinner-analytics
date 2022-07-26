@@ -5,7 +5,7 @@ type Query {
     id: ID!
   ): Node
   viewer: CeramicAccount
-  integrationEventMetadataIndex(
+  taskIndex(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -17,8 +17,8 @@ type Query {
 
     """Returns the last n items from the list."""
     last: Int
-  ): IntegrationEventMetadataConnection
-  taskEventIndex(
+  ): TaskConnection
+  integrationMessageIndex(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -26,13 +26,11 @@ type Query {
     first: Int
 
     """Returns the items in the list that come before the specified cursor."""
-    before: Strin
-
-    g
+    before: String
 
     """Returns the last n items from the list."""
     last: Int
-  ): TaskEventConnection
+  ): IntegrationMessageConnection
 }
 
 """An object with an ID"""
@@ -44,7 +42,7 @@ interface Node {
 type CeramicAccount implements Node {
   id: ID!
   isViewer: Boolean!
-  integrationEventMetadataList(
+  taskList(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -56,8 +54,8 @@ type CeramicAccount implements Node {
 
     """Returns the last n items from the list."""
     last: Int
-  ): IntegrationEventMetadataConnection
-  taskEventList(
+  ): TaskConnection
+  integrationMessageList(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -69,16 +67,16 @@ type CeramicAccount implements Node {
 
     """Returns the last n items from the list."""
     last: Int
-  ): TaskEventConnection
+  ): IntegrationMessageConnection
 }
 
 """A connection to a list of items."""
-type IntegrationEventMetadataConnection {
+type TaskConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [IntegrationEventMetadataEdge]
+  edges: [TaskEdge]
 }
 
 """Information about pagination in a connection."""
@@ -97,97 +95,98 @@ type PageInfo {
 }
 
 """An edge in a connection."""
-type IntegrationEventMetadataEdge {
+type TaskEdge {
   """The item at the end of the edge"""
-  node: IntegrationEventMetadata
+  node: Task
 
   """A cursor for use in pagination"""
   cursor: String!
 }
 
-type IntegrationEventMetadata implements Node {
-  id: ID!
-  date: Int
-  from: String!
-  type: String!
-}
-
-"""A connection to a list of items."""
-type TaskEventConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [TaskEventEdge]
-}
-
-"""An edge in a connection."""
-type TaskEventEdge {
-  """The item at the end of the edge"""
-  node: TaskEvent
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
-type TaskEvent implements Node {
+type Task implements Node {
   id: ID!
   content: String!
   assignee: String!
   completed: Boolean
 }
 
-type Mutation {
-  createIntegrationEventMetadata(input: CreateIntegrationEventMetadataInput!): CreateIntegrationEventMetadataPayload
-  updateIntegrationEventMetadata(input: UpdateIntegrationEventMetadataInput!): UpdateIntegrationEventMetadataPayload
-  createTaskEvent(input: CreateTaskEventInput!): CreateTaskEventPayload
-  updateTaskEvent(input: UpdateTaskEventInput!): UpdateTaskEventPayload
+"""A connection to a list of items."""
+type IntegrationMessageConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [IntegrationMessageEdge]
 }
 
-type CreateIntegrationEventMetadataPayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-  viewer: CeramicAccount
-  document: IntegrationEventMetadata!
-  clientMutationId: String
+"""An edge in a connection."""
+type IntegrationMessageEdge {
+  """The item at the end of the edge"""
+  node: IntegrationMessage
+
+  """A cursor for use in pagination"""
+  cursor: String!
 }
 
-input CreateIntegrationEventMetadataInput {
-  content: RequiredIntegrationEventMetadataInput!
-  clientMutationId: String
-}
-
-input RequiredIntegrationEventMetadataInput {
+type IntegrationMessage implements Node {
+  id: ID!
   date: Int
   from: String!
   type: String!
+  message: String!
 }
 
-type UpdateIntegrationEventMetadataPayload {
+type Mutation {
+  createTask(input: CreateTaskInput!): CreateTaskPayload
+  updateTask(input: UpdateTaskInput!): UpdateTaskPayload
+  createIntegrationMessage(input: CreateIntegrationMessageInput!): CreateIntegrationMessagePayload
+  updateIntegrationMessage(input: UpdateIntegrationMessageInput!): UpdateIntegrationMessagePayload
+}
+
+type CreateTaskPayload {
   """Fetches an object given its ID"""
   node(
     """The ID of an object"""
     id: ID!
   ): Node
   viewer: CeramicAccount
-  document: IntegrationEventMetadata!
+  document: Task!
   clientMutationId: String
 }
 
-input UpdateIntegrationEventMetadataInput {
+input CreateTaskInput {
+  content: RequiredTaskInput!
+  clientMutationId: String
+}
+
+input RequiredTaskInput {
+  content: String!
+  assignee: String!
+  completed: Boolean
+}
+
+type UpdateTaskPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: Task!
+  clientMutationId: String
+}
+
+input UpdateTaskInput {
   id: ID!
-  content: IntegrationEventMetadataInput!
+  content: TaskInput!
   options: UpdateOptionsInput
   clientMutationId: String
 }
 
-input IntegrationEventMetadataInput {
-  date: Int
-  from: String
-  type: String
+input TaskInput {
+  content: String
+  assignee: String
+  completed: Boolean
 }
 
 input UpdateOptionsInput {
@@ -198,48 +197,50 @@ input UpdateOptionsInput {
 """A Ceramic Commit ID"""
 scalar CeramicCommitID
 
-type CreateTaskEventPayload {
+type CreateIntegrationMessagePayload {
   """Fetches an object given its ID"""
   node(
     """The ID of an object"""
     id: ID!
   ): Node
   viewer: CeramicAccount
-  document: TaskEvent!
+  document: IntegrationMessage!
   clientMutationId: String
 }
 
-input CreateTaskEventInput {
-  content: RequiredTaskEventInput!
+input CreateIntegrationMessageInput {
+  content: RequiredIntegrationMessageInput!
   clientMutationId: String
 }
 
-input RequiredTaskEventInput {
-  content: String!
-  assignee: String!
-  completed: Boolean
+input RequiredIntegrationMessageInput {
+  date: Int
+  from: String!
+  type: String!
+  message: String!
 }
 
-type UpdateTaskEventPayload {
+type UpdateIntegrationMessagePayload {
   """Fetches an object given its ID"""
   node(
     """The ID of an object"""
     id: ID!
   ): Node
   viewer: CeramicAccount
-  document: TaskEvent!
+  document: IntegrationMessage!
   clientMutationId: String
 }
 
-input UpdateTaskEventInput {
+input UpdateIntegrationMessageInput {
   id: ID!
-  content: TaskEventInput!
+  content: IntegrationMessageInput!
   options: UpdateOptionsInput
   clientMutationId: String
 }
 
-input TaskEventInput {
-  content: String
-  assignee: String
-  completed: Boolean
+input IntegrationMessageInput {
+  date: Int
+  from: String
+  type: String
+  message: String
 }

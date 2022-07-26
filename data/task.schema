@@ -1,0 +1,8 @@
+type Task @model(
+    accountRelation: LIST,
+    description: "Basic task"
+) {
+    assignee: String! @length(min:1, max: 30)
+    completed: Boolean
+    content: String! @length(max:2000)
+}

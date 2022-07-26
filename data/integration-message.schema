@@ -1,0 +1,9 @@
+type IntegrationMessage @model(
+    accountRelation: LIST,
+    description: "Message from an integration"
+) {
+    type: String! @length(min:1, max: 30)
+    date: Int
+    from: String! @length(min:1, max: 30)
+    message: String! @length(min:1, max: 2000)
+}

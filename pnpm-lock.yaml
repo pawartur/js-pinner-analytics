@@ -9,12 +9,17 @@ specifiers:
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
   chart.js: ^3.8.2
+  did-resolver: ^3.2.2
+  dids: ^3.2.0
   eslint: 8.20.0
   eslint-config-next: 12.2.3
+  key-did-provider-ed25519: ^2.0.1
+  key-did-resolver: ^2.0.5
   next: 12.2.3
   react: 18.2.0
   react-dom: 18.2.0
   typescript: 4.7.4
+  uint8arrays: ^3.0.0
 
 dependencies:
   '@apollo/client': 3.6.9_react@18.2.0
@@ -22,9 +27,14 @@ dependencies:
   '@composedb/devtools': 0.1.0
   '@composedb/types': 0.1.0
   chart.js: 3.8.2
+  did-resolver: 3.2.2
+  dids: 3.2.0
+  key-did-provider-ed25519: 2.0.1
+  key-did-resolver: 2.0.5
   next: 12.2.3_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  uint8arrays: 3.0.0
 
 devDependencies:
   '@types/node': 18.6.1
@@ -1775,7 +1785,6 @@ packages:
 
   /fast-json-stable-stringify/2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
-    dev: true
 
   /fast-levenshtein/2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
@@ -2208,6 +2217,26 @@ packages:
       array-includes: 3.1.5
       object.assign: 4.1.2
     dev: true
+
+  /key-did-provider-ed25519/2.0.1:
+    resolution: {integrity: sha512-FaB2g7zUAeN/bLaFl2YSNQx9NsxgDd/3TR1YGvoXLhENsvZBdyA2V7hX8/MZhZ5jm82wL5lRw3O4UXuz/pJANQ==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      '@stablelib/ed25519': 1.0.2
+      did-jwt: 6.2.1
+      fast-json-stable-stringify: 2.1.0
+      rpc-utils: 0.6.2
+      uint8arrays: 3.0.0
+    dev: false
+
+  /key-did-resolver/2.0.5:
+    resolution: {integrity: sha512-4WPGWjkg4nabR6v1mKepZAhry4UM4vqsq91PjLU3pUjIX3KppkqndrNW3uJhC669tbaRF2zbaLtTpEYJhVERSw==}
+    dependencies:
+      '@stablelib/ed25519': 1.0.2
+      multiformats: 9.7.0
+      uint8arrays: 3.0.0
+      varint: 6.0.0
+    dev: false
 
   /language-subtag-registry/0.3.22:
     resolution: {integrity: sha512-tN0MCzyWnoz/4nHS6uxdlFWoUZT7ABptwKPQ52Ea7URk6vll88bWBVhodtnlfEuCcKWNGoc+uGbw1cwa9IKh/w==}
