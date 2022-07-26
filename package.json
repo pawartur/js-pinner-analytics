@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@composedb/client": "^0.1.0",
     "@composedb/devtools": "^0.1.0",
+    "@composedb/types": "^0.1.0",
     "chart.js": "^3.8.2",
     "next": "12.2.3",
     "react": "18.2.0",

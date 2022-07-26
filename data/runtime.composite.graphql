@@ -26,7 +26,9 @@ type Query {
     first: Int
 
     """Returns the items in the list that come before the specified cursor."""
-    before: String
+    before: Strin
+
+    g
 
     """Returns the last n items from the list."""
     last: Int
