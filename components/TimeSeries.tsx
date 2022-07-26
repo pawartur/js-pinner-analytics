@@ -35,7 +35,7 @@ const options = {
   plugins: {
     title: {
       display: true,
-      text: 'Chart.js Bar Chart - Stacked',
+      text: 'Events by time and type',
     },
   },
   responsive: true,
@@ -49,23 +49,23 @@ const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['25th Jul', '26th Jul', '27th Jul', '28th Jul', '29th Jul', '30th Jul', '31st Jul'];
 const testData = {
   labels,
   datasets: [
     {
-      label: 'Dataset 1',
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+      label: 'Tasks',
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
       backgroundColor: 'rgb(255, 99, 132)',
     },
     {
-      label: 'Dataset 2',
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+      label: 'Pinned Messages',
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
       backgroundColor: 'rgb(75, 192, 192)',
     },
     {
-      label: 'Dataset 3',
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+      label: 'Reminders',
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
       backgroundColor: 'rgb(53, 162, 235)',
     },
   ],
