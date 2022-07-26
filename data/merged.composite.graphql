@@ -130,7 +130,7 @@ type IntegrationMessageEdge {
 
 type IntegrationMessage implements Node {
   id: ID!
-  date: Int
+  date: String
   from: String!
   type: String!
   message: String!
@@ -214,7 +214,7 @@ input CreateIntegrationMessageInput {
 }
 
 input RequiredIntegrationMessageInput {
-  date: Int
+  date: String
   from: String!
   type: String!
   message: String!
@@ -239,7 +239,7 @@ input UpdateIntegrationMessageInput {
 }
 
 input IntegrationMessageInput {
-  date: Int
+  date: String
   from: String
   type: String
   message: String

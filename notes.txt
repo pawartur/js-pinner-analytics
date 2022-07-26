@@ -1,0 +1,3 @@
+1. node bin/run.js document:create kjzl6hvfrbw6c5yj6vtu41twqhu93xf49melrv0w2i5r8hrksn16scz1azp53gh '{"date":"2022-07-26 10:30:00", "type":"Task", "from":"did:key:z6MkgeE9Lo48Tz7HJsk8EGhCRbEg1obUg7U17bbM5g9HgPz8", "message":"Write the scaffolding next.js analytics app"}' -k fd4078045500411b4e1c70f289770822df7ecbb7cf4a13bfa6e9c88013fa5361
+2. node bin/run.js document:create kjzl6hvfrbw6c7ujre2hujba6tr5b03wsesolmivl6fj661bx8d09u39sypajbc '{"assignee":"did:key:z6MkgeE9Lo48Tz7HJsk8EGhCRbEg1obUg7U17bbM5g9HgPz8", "content":"kjzl6kcym7w8yabib1mqd0oax2ckb3t59r62sz5puqqltbpvwes7w1gvvp1vtdf"}' -k fd4078045500411b4e1c70f289770822df7ecbb7cf4a13bfa6e9c88013fa5361
+
