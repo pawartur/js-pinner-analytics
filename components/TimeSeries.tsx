@@ -121,7 +121,10 @@ const TimeSeries = () => {
           }
         }
       }
-    `)
+    `),
+    {
+      pollInterval: 5000
+    }
   )
   const [chartData, setChartData] = useState<ChartData>()
 
@@ -131,28 +134,30 @@ const TimeSeries = () => {
       return edge.node
     }) as Array<IntergrationMessageInfo>
 
-    const dateLabels = intergrationMessageInfos.map((info) => {
-      return info.date.split(' ')[0]
-    })
-    console.log('DATE LABELS', dateLabels)
-
+    const dateLabels = Array.from(new Set(intergrationMessageInfos.map((info) => {
+      const date = new Date(info.date)
+      return `${date.getDate()} - ${date.getMonth() + 1} ${date.getHours()}:00 - ${date.getHours()}:59`
+    }))).sort()
     const messageTypes = Array.from(new Set(intergrationMessageInfos.map((info: IntergrationMessageInfo) => {
       return info.type
-    }))).sort() as Array<string>
-    console.log('MESSAGE TYPES', messageTypes)
-
+    }))).sort()
     const chartData: ChartData = {
       labels: dateLabels,
       datasets: messageTypes.map((messageType: string, index) => {
         return {
           label: messageType,
-          data: dateLabels.map((dateLabel) => { return intergrationMessageInfos.filter((info) => { return info.date.split(' ')[0] === dateLabel && info.type === messageType }).length }),
+          data: dateLabels.map(
+            (dateLabel) => {
+              return intergrationMessageInfos.filter((info) => {
+                const date = new Date(info.date)
+                return info.type === messageType && dateLabel.startsWith(`${date.getDate()} - ${date.getMonth() + 1} ${date.getHours()}:00`)
+              }).length
+            }
+          ),
           backgroundColor: COLORS[index]
         }
       })
     }
-    console.log('CHART DATA', chartData)
-
     setChartData(chartData)
   }
 
@@ -174,10 +179,7 @@ const TimeSeries = () => {
     )
   } else {
     return (
-      <div>
-        <div>Time Series</div>
-        <Bar options={options} data={chartData!} />
-      </div>
+      <Bar options={options} data={chartData!} />
     )
   }
 }
