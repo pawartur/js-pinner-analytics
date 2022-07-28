@@ -30,7 +30,7 @@ const options = {
   plugins: {
     title: {
       display: true,
-      text: 'Events by time and type',
+      text: 'Events by time and source',
     },
   },
   responsive: true,
@@ -148,19 +148,19 @@ const TimeSeries = () => {
       currentDate = new Date(currentDate.getTime() + 3600000)
       dateLabels.push(`${currentDate.getDate()} - ${currentDate.getMonth() + 1} ${currentDate.getHours()}:00 - ${currentDate.getHours()}:59`)
     }
-    const messageTypes = Array.from(new Set(intergrationMessageInfos.map((info: IntergrationMessageInfo) => {
-      return info.type
+    const messageSources = Array.from(new Set(intergrationMessageInfos.map((info: IntergrationMessageInfo) => {
+      return info.from
     }))).sort()
     const chartData: ChartData = {
       labels: dateLabels,
-      datasets: messageTypes.map((messageType: string, index) => {
+      datasets: messageSources.map((messageSource: string, index) => {
         return {
-          label: messageType,
+          label: messageSource,
           data: dateLabels.map(
             (dateLabel) => {
               return intergrationMessageInfos.filter((info) => {
                 const date = new Date(info.date)
-                return info.type === messageType && dateLabel.startsWith(`${date.getDate()} - ${date.getMonth() + 1} ${date.getHours()}:00`)
+                return info.from === messageSource && dateLabel.startsWith(`${date.getDate()} - ${date.getMonth() + 1} ${date.getHours()}:00`)
               }).length
             }
           ),
