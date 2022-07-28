@@ -131,13 +131,23 @@ const TimeSeries = () => {
   const reloadChart = async () => {
     if (data === undefined || data?.integrationMessageIndex.edges.length === 0) return
     const intergrationMessageInfos = data.integrationMessageIndex.edges.map((edge: Record<string, any>) => {
-      return edge.node
+      return edge.node as IntergrationMessageInfo
+    }).sort((left: IntergrationMessageInfo, right: IntergrationMessageInfo) => {
+      const leftDate = new Date(left.date)
+      const rightDate = new Date(right.date)
+      return leftDate < rightDate
     }) as Array<IntergrationMessageInfo>
 
-    const dateLabels = Array.from(new Set(intergrationMessageInfos.map((info) => {
-      const date = new Date(info.date)
-      return `${date.getDate()} - ${date.getMonth() + 1} ${date.getHours()}:00 - ${date.getHours()}:59`
-    }))).sort()
+    const firstDate = new Date(intergrationMessageInfos[0].date)
+    const lastDate = new Date(intergrationMessageInfos[intergrationMessageInfos.length - 1].date)
+
+    const dateLabels = new Array<string>()
+    dateLabels.push(`${firstDate.getDate()} - ${firstDate.getMonth() + 1} ${firstDate.getHours()}:00 - ${firstDate.getHours()}:59`)
+    let currentDate = firstDate
+    while(currentDate.getTime() < lastDate.getTime()) {
+      currentDate = new Date(currentDate.getTime() + 3600000)
+      dateLabels.push(`${currentDate.getDate()} - ${currentDate.getMonth() + 1} ${currentDate.getHours()}:00 - ${currentDate.getHours()}:59`)
+    }
     const messageTypes = Array.from(new Set(intergrationMessageInfos.map((info: IntergrationMessageInfo) => {
       return info.type
     }))).sort()
@@ -165,10 +175,16 @@ const TimeSeries = () => {
     reloadChart()
   }, [data])
 
-  if (loading || chartData === undefined) {
+  if (loading) {
     return (
       <div>
         <label>Loading...</label>
+      </div>
+    )
+  } else if (chartData === undefined) {
+    return (
+      <div>
+        <label>No data</label>
       </div>
     )
   } else  if (error) {
