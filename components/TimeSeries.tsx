@@ -15,7 +15,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2'
-import { faker } from '@faker-js/faker'
+import { Button } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -24,25 +24,27 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-);
+)
 
-const options = {
-  plugins: {
-    title: {
-      display: true,
-      text: 'Events by time and source',
+const getOptions = (groupBy: string) => {
+  return {
+    plugins: {
+      title: {
+        display: true,
+        text: `Events by time and ${groupBy}`,
+      },
     },
-  },
-  responsive: true,
-  scales: {
-    x: {
-      stacked: true,
+    responsive: true,
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
     },
-    y: {
-      stacked: true,
-    },
-  },
-};
+  };
+}
 
 const COLORS = [
   'rgb(255, 99, 132)',
@@ -76,27 +78,6 @@ type ChartData = {
   datasets: Array<Dataset>
 }
 
-const testData: ChartData = {
-  labels,
-  datasets: [
-    {
-      label: 'Tasks',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgb(255, 99, 132)',
-    },
-    {
-      label: 'Pinned Messages',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgb(75, 192, 192)',
-    },
-    {
-      label: 'Reminders',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgb(53, 162, 235)',
-    },
-  ],
-}
-
 type IntergrationMessageInfo = {
   id: string,
   date: string,
@@ -127,6 +108,7 @@ const TimeSeries = () => {
     }
   )
   const [chartData, setChartData] = useState<ChartData>()
+  const [groupBy, setGroupBy] = useState<string>('Source')
 
   const reloadChart = async () => {
     if (data === undefined || data?.integrationMessageIndex.edges.length === 0) return
@@ -148,19 +130,27 @@ const TimeSeries = () => {
       currentDate = new Date(currentDate.getTime() + 3600000)
       dateLabels.push(`${currentDate.getDate()} - ${currentDate.getMonth() + 1} ${currentDate.getHours()}:00 - ${currentDate.getHours()}:59`)
     }
-    const messageSources = Array.from(new Set(intergrationMessageInfos.map((info: IntergrationMessageInfo) => {
-      return info.from
+    const groups = Array.from(new Set(intergrationMessageInfos.map((info: IntergrationMessageInfo) => {
+      if (groupBy === 'Source') {
+        return info.from.split(":")[0]
+      } else {
+        return info.type
+      }
     }))).sort()
     const chartData: ChartData = {
       labels: dateLabels,
-      datasets: messageSources.map((messageSource: string, index) => {
+      datasets: groups.map((group: string, index) => {
         return {
-          label: messageSource,
+          label: group,
           data: dateLabels.map(
             (dateLabel) => {
               return intergrationMessageInfos.filter((info) => {
                 const date = new Date(info.date)
-                return info.from === messageSource && dateLabel.startsWith(`${date.getDate()} - ${date.getMonth() + 1} ${date.getHours()}:00`)
+                if (groupBy === 'Source') {
+                  return info.from === group && dateLabel.startsWith(`${date.getDate()} - ${date.getMonth() + 1} ${date.getHours()}:00`)
+                } else {
+                  return info.type === group && dateLabel.startsWith(`${date.getDate()} - ${date.getMonth() + 1} ${date.getHours()}:00`)
+                }
               }).length
             }
           ),
@@ -173,7 +163,7 @@ const TimeSeries = () => {
 
   useEffect(() => {
     reloadChart()
-  }, [data])
+  }, [data, groupBy])
 
   if (loading) {
     return (
@@ -194,8 +184,24 @@ const TimeSeries = () => {
       </div>
     )
   } else {
+    const containerStyle = {
+      width: '100%',
+      height: '100%'
+    };
+
     return (
-      <Bar options={options} data={chartData!} />
+      <div style={containerStyle}>
+        <div>
+          <label>Group by: </label>
+          <Button variant="outlined" onClick={() => {
+            setGroupBy('Source')
+          }}>Source</Button>
+          <Button variant="outlined" onClick={() => {
+            setGroupBy('Type')
+          }}>Type</Button>
+        </div>
+        <Bar options={getOptions(groupBy)} data={chartData!} />
+      </div>
     )
   }
 }

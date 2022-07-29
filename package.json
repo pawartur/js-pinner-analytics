@@ -11,7 +11,11 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@composedb/client": "^0.1.0",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.9.2",
     "chart.js": "^3.8.2",
+    "mui": "^0.0.1",
     "next": "12.2.3",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
